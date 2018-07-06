@@ -1,0 +1,50 @@
+*** on server side
+
+
+
+
+
+
+*** on client side
+
+1. download from https://github.com/wangyu-/udp2raw-tunnel/releases
+
+2. vi /etc/systemd/system/udp2raw.service
+
+3. insert below text
+
+[Unit]
+Description=Udp2raw Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/udp2raw/udp2raw_amd64 -c -l 127.0.0.1:bbbbb -r xxx.xxx.xxx.xxx:ccccc -k "xxxxxxxxxxxxx" -a --raw-mode faketcp
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+4. download from https://github.com/wangyu-/udp2raw-tunnel/releases
+
+5. vi /etc/systemd/systemudp/speeder.service
+
+6. insert below text
+
+[Unit]
+Description=UdpSpeeder Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/udpspeeder/speederv2_x86 -c -l 127.0.0.1:aaaaa -r 127.0.0.1:bbbbb --report 30
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+7. start the two services.
+
+
